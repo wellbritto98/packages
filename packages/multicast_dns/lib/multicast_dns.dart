@@ -111,7 +111,6 @@ class MDnsClient {
       listenAddress.address,
       selectedMDnsPort,
       reuseAddress: true,
-      reusePort: true,
       ttl: 255,
     );
 
@@ -132,11 +131,10 @@ class MDnsClient {
     for (final NetworkInterface interface in interfaces) {
       // Create a socket for sending on each adapter.
       final InternetAddress targetAddress = interface.addresses[0];
-      final RawDatagramSocket socket = await _rawDatagramSocketFactory(
-        targetAddress,
+      final RawDatagramSocket incoming = await _rawDatagramSocketFactory(
+        listenAddress.address,
         selectedMDnsPort,
         reuseAddress: true,
-        reusePort: true,
         ttl: 255,
       );
       _sockets.add(socket);
